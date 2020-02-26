@@ -45,13 +45,21 @@ class scoutwatchUITests: XCTestCase {
         let tabBarsQuery = app.tabBars
         XCTAssertEqual(tabBarsQuery.buttons.count, 4)
 
-        tabBarsQuery.buttons["Preferences"].tap()
+        /**
+         * Note! Used index to find localized buttons because accessibility identifier doesn't work with tabBars like
+         * tabBarsQuery.buttons["prefs_button"].tap()
+         * See https://forums.developer.apple.com/thread/64157
+         */
+        tabBarsQuery.buttons.element(boundBy: 3).tap()
         snapshot("01-preferences")
-        tabBarsQuery.buttons["Main"].tap()
+
+        tabBarsQuery.buttons.element(boundBy: 0).tap()
         snapshot("02-main")
-        tabBarsQuery.buttons["Alarms"].tap()
+
+        tabBarsQuery.buttons.element(boundBy: 1).tap()
         snapshot("03-alarms")
-        tabBarsQuery.buttons["Stats"].tap()
+
+        tabBarsQuery.buttons.element(boundBy: 2).tap()
         snapshot("04-stats")
     }
     
